@@ -18,6 +18,9 @@ export class Professor {
   @Column()
   senha: string;
 
+  @Column()
+  dataCadastro: string;
+
   @OneToMany(() => Turma, (turma) => turma.professor)
   user: Turma;
 }

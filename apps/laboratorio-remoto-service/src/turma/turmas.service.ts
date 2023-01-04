@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CadastrarTurma } from './dto/cadastrar-turma.dto';
 import { Turma } from './turma.entity';
+import * as dayjs from 'dayjs';
 
 @Injectable()
 export class TurmasService {
@@ -17,6 +18,7 @@ export class TurmasService {
     turma.nome = cadastrarTurmaDto.nome;
     turma.professor = cadastrarTurmaDto.professorId;
     turma.alunos = cadastrarTurmaDto.alunos;
+    turma.dataCadastro = dayjs().format();
 
     const usuarioExistente = await this.turmasRepository.findOneBy({
       codigo: turma.codigo,

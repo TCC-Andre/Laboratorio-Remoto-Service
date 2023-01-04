@@ -18,8 +18,10 @@ export class ProfessoresController {
   constructor(private readonly professoresService: ProfessoresService) {}
 
   @Post()
-  create(@Body() cadastrarAlunoDto: CadastrarProfessor): Promise<Professor> {
-    return this.professoresService.create(cadastrarAlunoDto);
+  create(
+    @Body() cadastrarProfessorDto: CadastrarProfessor,
+  ): Promise<Professor> {
+    return this.professoresService.create(cadastrarProfessorDto);
   }
 
   @Get()

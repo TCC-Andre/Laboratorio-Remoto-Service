@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CadastrarAluno } from './dto/cadastrar-aluno.dto';
 import { Aluno } from './aluno.entity';
+import * as dayjs from 'dayjs';
 
 @Injectable()
 export class AlunosService {
@@ -18,6 +19,7 @@ export class AlunosService {
     user.email = cadastrarAlunoDto.email;
     user.senha = cadastrarAlunoDto.senha;
     user.turma = cadastrarAlunoDto.turma;
+    user.dataCadastro = dayjs().format();
 
     const usuarioExistente = await this.alunosRepository.findOneBy({
       matricula: user.matricula,

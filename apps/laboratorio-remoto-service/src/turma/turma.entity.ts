@@ -7,6 +7,7 @@ import {
   JoinTable,
 } from 'typeorm';
 import { Aluno } from '../alunos/aluno.entity';
+import { Experimento } from '../experimento/experimento.entity';
 import { Professor } from '../professor/professor.entity';
 
 @Entity()
@@ -20,6 +21,9 @@ export class Turma {
   @Column()
   codigo: string;
 
+  @Column()
+  dataCadastro: string;
+
   @ManyToOne(() => Professor, (professor) => professor.id, {
     eager: true,
     // cascade: ['insert', 'update'],
@@ -32,4 +36,11 @@ export class Turma {
   })
   @JoinTable()
   alunos: Aluno[];
+
+  @ManyToMany(() => Experimento, (experimento) => experimento.turma, {
+    cascade: true,
+    eager: true,
+  })
+  @JoinTable()
+  experimentos: Experimento[];
 }

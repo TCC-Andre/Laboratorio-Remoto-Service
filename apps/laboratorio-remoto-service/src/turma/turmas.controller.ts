@@ -15,25 +15,25 @@ import { TurmasService } from './turmas.service';
 @ApiTags('Turmas')
 @Controller('turmas')
 export class TurmasController {
-  constructor(private readonly professoresService: TurmasService) {}
+  constructor(private readonly turmasService: TurmasService) {}
 
   @Post()
-  create(@Body() cadastrarAlunoDto: CadastrarTurma): Promise<Turma> {
-    return this.professoresService.create(cadastrarAlunoDto);
+  create(@Body() cadastrarTurmaDto: CadastrarTurma): Promise<Turma> {
+    return this.turmasService.create(cadastrarTurmaDto);
   }
 
   @Get()
   findAll(): Promise<Turma[]> {
-    return this.professoresService.findAll();
+    return this.turmasService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id', ParseUUIDPipe) id: string): Promise<Turma> {
-    return this.professoresService.findOne(id);
+    return this.turmasService.findOne(id);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string): Promise<void> {
-    return this.professoresService.remove(id);
+    return this.turmasService.remove(id);
   }
 }
