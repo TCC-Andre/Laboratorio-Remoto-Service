@@ -17,6 +17,7 @@ export class AlunosService {
     user.matricula = cadastrarAlunoDto.matricula;
     user.email = cadastrarAlunoDto.email;
     user.senha = cadastrarAlunoDto.senha;
+    user.turma = cadastrarAlunoDto.turma;
 
     const usuarioExistente = await this.alunosRepository.findOneBy({
       matricula: user.matricula,

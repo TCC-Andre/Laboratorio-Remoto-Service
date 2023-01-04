@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Turma } from '../turma/turma.entity';
 
 @Entity()
 export class Professor {
@@ -16,4 +17,7 @@ export class Professor {
 
   @Column()
   senha: string;
+
+  @OneToMany(() => Turma, (turma) => turma.professor)
+  user: Turma;
 }

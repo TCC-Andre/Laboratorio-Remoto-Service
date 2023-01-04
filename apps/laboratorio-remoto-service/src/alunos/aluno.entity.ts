@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import { Turma } from '../turma/turma.entity';
 
 @Entity()
 export class Aluno {
@@ -16,4 +17,9 @@ export class Aluno {
 
   @Column()
   senha: string;
+
+  @ManyToMany(() => Turma, (turma) => turma.alunos, {
+    // eager: true,
+  })
+  turma: Turma[];
 }
