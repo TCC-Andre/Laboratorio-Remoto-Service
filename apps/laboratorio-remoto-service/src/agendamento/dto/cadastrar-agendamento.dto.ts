@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDateString, IsNotEmpty } from 'class-validator';
 import { Aluno } from '../../alunos/aluno.entity';
+import { Experimento } from '../../experimento/experimento.entity';
 
 export class CadastrarAgendamento {
   @ApiProperty()
@@ -10,10 +11,9 @@ export class CadastrarAgendamento {
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsDateString()
-  dataFim: string;
+  alunoId: Aluno;
 
   @ApiProperty()
   @IsNotEmpty()
-  alunoId: Aluno;
+  experimentoId: Experimento;
 }

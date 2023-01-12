@@ -3,12 +3,9 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToMany,
-  CreateDateColumn,
-  Timestamp,
-  OneToOne,
+  OneToMany,
 } from 'typeorm';
 import { Turma } from '../turma/turma.entity';
-import * as dayjs from 'dayjs';
 import { Agendamento } from '../agendamento/agendamento.entity';
 @Entity()
 export class Aluno {
@@ -32,9 +29,9 @@ export class Aluno {
   })
   turma: Turma[];
 
-  @Column()
-  dataCadastro: string;
+  @Column({ type: 'timestamp' })
+  dataCadastro: Date | string;
 
-  @OneToOne(() => Agendamento, (agendamento) => agendamento.aluno)
+  @OneToMany(() => Agendamento, (agendamento) => agendamento.aluno)
   agendamento: Agendamento;
 }

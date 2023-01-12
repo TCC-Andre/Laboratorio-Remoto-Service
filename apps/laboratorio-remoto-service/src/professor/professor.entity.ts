@@ -18,8 +18,8 @@ export class Professor {
   @Column()
   senha: string;
 
-  @Column()
-  dataCadastro: string;
+  @Column({ type: 'timestamp' })
+  dataCadastro: Date | string;
 
   @OneToMany(() => Turma, (turma) => turma.professor)
   user: Turma;

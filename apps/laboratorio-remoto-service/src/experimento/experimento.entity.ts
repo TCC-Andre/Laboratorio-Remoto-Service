@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  OneToMany,
+} from 'typeorm';
 import { Turma } from '../turma/turma.entity';
 
 @Entity()
@@ -10,16 +16,22 @@ export class Experimento {
   nome: string;
 
   @Column()
+  descricao: string;
+
+  @Column()
   duracao: number;
 
   @Column()
   status: boolean;
 
-  @Column()
-  dataCadastro: string;
+  @Column({ type: 'timestamp' })
+  dataCadastro: Date | string;
 
   @ManyToMany(() => Turma, (turma) => turma.experimentos, {
     // eager: true,
   })
   turma: Turma[];
+
+  @OneToMany(() => Experimento, (experimento) => experimento.agendamento)
+  agendamento: Turma;
 }

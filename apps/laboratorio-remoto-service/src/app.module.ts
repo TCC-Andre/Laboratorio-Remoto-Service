@@ -15,7 +15,7 @@ import { TurmasModule } from './turma/turmas.module';
       username: 'root',
       password: 'root',
       database: 'test',
-      timezone: '+03:00',
+      timezone: '-03:00',
       autoLoadEntities: true,
       synchronize: true,
     }),

@@ -21,8 +21,8 @@ export class Turma {
   @Column()
   codigo: string;
 
-  @Column()
-  dataCadastro: string;
+  @Column({ type: 'timestamp' })
+  dataCadastro: Date | string;
 
   @ManyToOne(() => Professor, (professor) => professor.id, {
     eager: true,

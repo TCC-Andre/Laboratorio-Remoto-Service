@@ -11,6 +11,8 @@ import { ApiTags } from '@nestjs/swagger';
 import { CadastrarAgendamento } from './dto/cadastrar-agendamento.dto';
 import { Agendamento } from './agendamento.entity';
 import { AgendamentosService } from './agendamentos.service';
+import { ListarHorariosDisponiveisAgendamento } from './dto/listar-horarios-disponiveis-agendamento.dto';
+import dayjs from 'dayjs';
 
 @ApiTags('Agendamentos')
 @Controller('agendamentos')
@@ -37,5 +39,14 @@ export class AgendamentosController {
   @Delete(':id')
   remove(@Param('id') id: string): Promise<void> {
     return this.agendamentosService.remove(id);
+  }
+
+  @Post('/horarios-disponiveis')
+  async listarHorariosDisponiveisAgendamento(
+    @Body() horariosDisponiveis: ListarHorariosDisponiveisAgendamento,
+  ): Promise<dayjs.Dayjs[]> {
+    return await this.agendamentosService.listarHorariosDisponiveis(
+      horariosDisponiveis,
+    );
   }
 }

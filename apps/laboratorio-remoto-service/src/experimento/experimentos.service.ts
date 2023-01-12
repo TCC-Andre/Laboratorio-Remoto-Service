@@ -17,9 +17,11 @@ export class ExperimentosService {
   ): Promise<Experimento> {
     const experimento = new Experimento();
     experimento.nome = cadastrarExperimentoDto.nome;
+    experimento.descricao = cadastrarExperimentoDto.descricao;
     experimento.duracao = cadastrarExperimentoDto.duracao;
     experimento.status = cadastrarExperimentoDto.status;
     experimento.dataCadastro = dayjs().format();
+    experimento.turma = cadastrarExperimentoDto.turma;
 
     const usuarioExistente = await this.experimentosRepository.findOneBy({
       nome: experimento.nome,
@@ -29,7 +31,7 @@ export class ExperimentosService {
       throw new HttpException(
         {
           statusCode: HttpStatus.BAD_REQUEST,
-          message: 'Turma já cadastrada!',
+          message: 'Experimento já cadastrado!',
         },
         HttpStatus.BAD_REQUEST,
       );
