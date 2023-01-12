@@ -8,4 +8,4 @@ import { AgendamentosService } from './agendamentos.service';
   providers: [AgendamentosService],
   controllers: [AgendamentosController],
 })
-export class UserHttpModule {}
+export class AgendamentoHttpModule {}

@@ -8,4 +8,4 @@ import { ExperimentosService } from './experimentos.service';
   providers: [ExperimentosService],
   controllers: [ExperimentosController],
 })
-export class UserHttpModule {}
+export class ExperimentoHttpModule {}

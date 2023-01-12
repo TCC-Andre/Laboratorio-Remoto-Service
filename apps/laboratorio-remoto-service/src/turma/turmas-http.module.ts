@@ -8,4 +8,4 @@ import { TurmasService } from './turmas.service';
   providers: [TurmasService],
   controllers: [TurmasController],
 })
-export class UserHttpModule {}
+export class TurmaHttpModule {}

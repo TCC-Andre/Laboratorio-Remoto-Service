@@ -8,4 +8,4 @@ import { ProfessoresController } from './professores.controller';
   providers: [ProfessoresService],
   controllers: [ProfessoresController],
 })
-export class UserHttpModule {}
+export class ProfessorHttpModule {}

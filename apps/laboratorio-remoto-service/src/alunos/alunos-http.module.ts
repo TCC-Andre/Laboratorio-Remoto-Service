@@ -8,4 +8,4 @@ import { AlunosController } from './alunos.controller';
   providers: [AlunosService],
   controllers: [AlunosController],
 })
-export class UserHttpModule {}
+export class AlunoHttpModule {}
