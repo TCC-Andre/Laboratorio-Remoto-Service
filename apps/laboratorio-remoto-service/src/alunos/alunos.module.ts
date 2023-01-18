@@ -8,5 +8,6 @@ import { AlunosService } from './alunos.service';
   imports: [TypeOrmModule.forFeature([Aluno])],
   providers: [AlunosService],
   controllers: [AlunosController],
+  exports: [AlunosService],
 })
 export class AlunosModule {}

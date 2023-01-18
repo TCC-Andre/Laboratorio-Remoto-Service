@@ -4,7 +4,8 @@ import { Repository } from 'typeorm';
 import { CadastrarAluno } from './dto/cadastrar-aluno.dto';
 import { Aluno } from './aluno.entity';
 import * as dayjs from 'dayjs';
-
+import * as bcrypt from 'bcrypt';
+const saltRounds = 10;
 @Injectable()
 export class AlunosService {
   constructor(
@@ -17,7 +18,8 @@ export class AlunosService {
     user.nome = cadastrarAlunoDto.nome;
     user.matricula = cadastrarAlunoDto.matricula;
     user.email = cadastrarAlunoDto.email;
-    user.senha = cadastrarAlunoDto.senha;
+    const hash = await bcrypt.hash(cadastrarAlunoDto.senha, saltRounds);
+    user.senha = hash;
     user.turma = cadastrarAlunoDto.turma;
     user.dataCadastro = dayjs().format();
 
@@ -48,5 +50,9 @@ export class AlunosService {
 
   async remove(id: string): Promise<void> {
     await this.alunosRepository.delete(id);
+  }
+
+  async findOneMatricula(matricula: string): Promise<Aluno | undefined> {
+    return this.alunosRepository.findOneBy({ matricula: matricula });
   }
 }

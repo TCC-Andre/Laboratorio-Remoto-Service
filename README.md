@@ -16,11 +16,11 @@
 
 ####  Docker
 
-Existe um arquivo `docker-compose.yml` para iniciar o Docker.
+Existe um arquivo `docker-compose.yml` para iniciar o Docker com o seguinte comando:
 
-`docker-compose`
+`docker-compose up`
 
-Depois de executar a amostra, você pode parar o contêiner do Docker com
+Depois de executar a amostra, você pode parar o contêiner do Docker com:
 
 `docker-compose down`
 

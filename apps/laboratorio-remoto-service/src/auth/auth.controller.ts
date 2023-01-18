@@ -10,7 +10,7 @@ export class AuthController {
 
   @Post('auth/login')
   async login(@Body() usuarioLogin: LoginUsuarioDto) {
-    return this.authService.validarUsuario(
+    return this.authService.validaUsuario(
       usuarioLogin.matricula,
       usuarioLogin.senha,
     );
