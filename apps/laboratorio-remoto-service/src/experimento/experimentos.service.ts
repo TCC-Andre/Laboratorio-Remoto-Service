@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { CadastrarExperimento } from './dto/cadastrar-experimento.dto';
 import { Experimento } from './experimento.entity';
 import * as dayjs from 'dayjs';
+import { EditarExperimento } from './dto/editar-experimento.dto';
 
 @Injectable()
 export class ExperimentosService {
@@ -50,5 +51,19 @@ export class ExperimentosService {
 
   async remove(id: string): Promise<void> {
     await this.experimentosRepository.delete(id);
+  }
+
+  async update(
+    id: string,
+    editarExperimentoDto: EditarExperimento,
+  ): Promise<Experimento> {
+    const experimento = await this.experimentosRepository.findOneBy({ id: id });
+
+    experimento.nome = editarExperimentoDto.nome;
+    experimento.descricao = editarExperimentoDto.descricao;
+    experimento.duracao = editarExperimentoDto.duracao;
+    experimento.status = editarExperimentoDto.status;
+
+    return this.experimentosRepository.save(experimento);
   }
 }
