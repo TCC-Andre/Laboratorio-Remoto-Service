@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { CadastrarTurma } from './dto/cadastrar-turma.dto';
 import { Turma } from './turma.entity';
 import * as dayjs from 'dayjs';
+import { EditarTurma } from './dto/editar-turma.dto';
 
 @Injectable()
 export class TurmasService {
@@ -47,5 +48,14 @@ export class TurmasService {
 
   async remove(id: string): Promise<void> {
     await this.turmasRepository.delete(id);
+  }
+
+  async update(id: string, editarAlunoDto: EditarTurma): Promise<Turma> {
+    const user = await this.turmasRepository.findOneBy({ id: id });
+
+    user.nome = editarAlunoDto.nome;
+    user.codigo = editarAlunoDto.codigo;
+
+    return this.turmasRepository.save(user);
   }
 }

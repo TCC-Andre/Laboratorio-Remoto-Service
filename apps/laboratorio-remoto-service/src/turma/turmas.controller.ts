@@ -6,9 +6,11 @@ import {
   Param,
   Post,
   ParseUUIDPipe,
+  Put,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CadastrarTurma } from './dto/cadastrar-turma.dto';
+import { EditarTurma } from './dto/editar-turma.dto';
 import { Turma } from './turma.entity';
 import { TurmasService } from './turmas.service';
 
@@ -30,6 +32,14 @@ export class TurmasController {
   @Get(':id')
   findOne(@Param('id', ParseUUIDPipe) id: string): Promise<Turma> {
     return this.turmasService.findOne(id);
+  }
+
+  @Put(':id')
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() editarTurmaDto: EditarTurma,
+  ) {
+    return this.turmasService.update(id, editarTurmaDto);
   }
 
   @Delete(':id')

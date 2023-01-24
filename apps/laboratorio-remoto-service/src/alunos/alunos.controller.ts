@@ -6,11 +6,13 @@ import {
   Param,
   Post,
   ParseUUIDPipe,
+  Put,
 } from '@nestjs/common';
 import { CadastrarAluno } from './dto/cadastrar-aluno.dto';
 import { Aluno } from './aluno.entity';
 import { AlunosService } from './alunos.service';
 import { ApiTags } from '@nestjs/swagger';
+import { EditarAluno } from './dto/editar-aluno.dto';
 
 @ApiTags('Alunos')
 @Controller('alunos')
@@ -30,6 +32,14 @@ export class AlunosController {
   @Get(':id')
   findOne(@Param('id', ParseUUIDPipe) id: string): Promise<Aluno> {
     return this.alunosService.findOne(id);
+  }
+
+  @Put(':id')
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() editarAlunoDto: EditarAluno,
+  ) {
+    return this.alunosService.update(id, editarAlunoDto);
   }
 
   @Delete(':id')

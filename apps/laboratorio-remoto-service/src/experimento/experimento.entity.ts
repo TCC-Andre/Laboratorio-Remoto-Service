@@ -28,7 +28,7 @@ export class Experimento {
   dataCadastro: Date | string;
 
   @ManyToMany(() => Turma, (turma) => turma.experimentos, {
-    // eager: true,
+    onDelete: 'CASCADE',
   })
   turma: Turma[];
 

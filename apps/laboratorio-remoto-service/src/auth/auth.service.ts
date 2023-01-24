@@ -46,6 +46,7 @@ export class AuthService {
           expiresIn: '50s',
         },
       ),
+      isAdmin: isAdmin,
     };
   }
 }

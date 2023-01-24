@@ -5,6 +5,7 @@ import { CadastrarAluno } from './dto/cadastrar-aluno.dto';
 import { Aluno } from './aluno.entity';
 import * as dayjs from 'dayjs';
 import * as bcrypt from 'bcrypt';
+import { EditarAluno } from './dto/editar-aluno.dto';
 const saltRounds = 10;
 @Injectable()
 export class AlunosService {
@@ -54,5 +55,15 @@ export class AlunosService {
 
   async findOneMatricula(matricula: string): Promise<Aluno | undefined> {
     return this.alunosRepository.findOneBy({ matricula: matricula });
+  }
+
+  async update(id: string, editarAlunoDto: EditarAluno): Promise<Aluno> {
+    const user = await this.alunosRepository.findOneBy({ id: id });
+
+    user.nome = editarAlunoDto.nome;
+    user.matricula = editarAlunoDto.matricula;
+    user.email = editarAlunoDto.email;
+
+    return this.alunosRepository.save(user);
   }
 }

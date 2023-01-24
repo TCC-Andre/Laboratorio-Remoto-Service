@@ -26,7 +26,7 @@ export class Turma {
 
   @ManyToOne(() => Professor, (professor) => professor.id, {
     eager: true,
-    // cascade: ['insert', 'update'],
+    cascade: ['insert', 'update'],
   })
   professor: Professor;
 
