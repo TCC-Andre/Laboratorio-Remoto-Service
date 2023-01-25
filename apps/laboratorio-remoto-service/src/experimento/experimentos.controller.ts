@@ -7,7 +7,10 @@ import {
   Post,
   ParseUUIDPipe,
   Put,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
 import { CadastrarExperimento } from './dto/cadastrar-experimento.dto';
 import { EditarExperimento } from './dto/editar-experimento.dto';
@@ -20,10 +23,12 @@ export class ExperimentosController {
   constructor(private readonly experimentosService: ExperimentosService) {}
 
   @Post()
+  @UseInterceptors(FileInterceptor('file'))
   create(
+    @UploadedFile() file,
     @Body() cadastrarExperimentoDto: CadastrarExperimento,
   ): Promise<Experimento> {
-    return this.experimentosService.create(cadastrarExperimentoDto);
+    return this.experimentosService.create(cadastrarExperimentoDto, file);
   }
 
   @Get()

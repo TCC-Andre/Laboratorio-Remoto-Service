@@ -5,6 +5,7 @@ import { CadastrarExperimento } from './dto/cadastrar-experimento.dto';
 import { Experimento } from './experimento.entity';
 import * as dayjs from 'dayjs';
 import { EditarExperimento } from './dto/editar-experimento.dto';
+import { Turma } from '../turma/turma.entity';
 
 @Injectable()
 export class ExperimentosService {
@@ -15,6 +16,7 @@ export class ExperimentosService {
 
   async create(
     cadastrarExperimentoDto: CadastrarExperimento,
+    file: any,
   ): Promise<Experimento> {
     const experimento = new Experimento();
     experimento.nome = cadastrarExperimentoDto.nome;
@@ -22,7 +24,8 @@ export class ExperimentosService {
     experimento.duracao = cadastrarExperimentoDto.duracao;
     experimento.status = cadastrarExperimentoDto.status;
     experimento.dataCadastro = dayjs().format();
-    experimento.turma = cadastrarExperimentoDto.turma;
+    experimento.turma = JSON.parse(cadastrarExperimentoDto.turma);
+    experimento.image = file.buffer;
 
     const usuarioExistente = await this.experimentosRepository.findOneBy({
       nome: experimento.nome,

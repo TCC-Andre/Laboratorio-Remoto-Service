@@ -1,9 +1,11 @@
+import { Blob } from 'buffer';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   ManyToMany,
   OneToMany,
+  Binary,
 } from 'typeorm';
 import { Turma } from '../turma/turma.entity';
 
@@ -31,6 +33,9 @@ export class Experimento {
     onDelete: 'CASCADE',
   })
   turma: Turma[];
+
+  @Column('longblob')
+  image?: string;
 
   @OneToMany(() => Experimento, (experimento) => experimento.agendamento)
   agendamento: Turma;

@@ -1,11 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsBoolean,
-  IsNotEmpty,
-  IsNumber,
-  IsObject,
-  IsOptional,
-} from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
 import { Turma } from '../../turma/turma.entity';
 
 export class CadastrarExperimento {
@@ -19,16 +13,18 @@ export class CadastrarExperimento {
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsNumber()
   duracao: number;
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsBoolean()
   status: boolean;
 
   @ApiProperty()
-  // @IsObject()
   @IsNotEmpty()
-  turma: Turma[];
+  // @IsOptional()
+  turma: string;
+
+  @ApiProperty()
+  @IsOptional()
+  image: string;
 }
