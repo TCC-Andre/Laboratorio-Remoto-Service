@@ -25,7 +25,7 @@ export class Aluno {
   senha: string;
 
   @ManyToMany(() => Turma, (turma) => turma.alunos, {
-    // eager: true,
+    eager: true,
   })
   turma: Turma[];
 

@@ -47,6 +47,7 @@ export class AuthService {
         },
       ),
       isAdmin: isAdmin,
+      id: payload.id,
     };
   }
 }

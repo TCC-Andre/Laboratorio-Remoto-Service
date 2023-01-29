@@ -25,7 +25,7 @@ export class ExperimentosService {
     experimento.status = cadastrarExperimentoDto.status;
     experimento.dataCadastro = dayjs().format();
     experimento.turma = JSON.parse(cadastrarExperimentoDto.turma);
-    experimento.image = file.buffer;
+    experimento.imagem = file.buffer;
 
     const usuarioExistente = await this.experimentosRepository.findOneBy({
       nome: experimento.nome,
@@ -68,5 +68,14 @@ export class ExperimentosService {
     experimento.status = editarExperimentoDto.status;
 
     return this.experimentosRepository.save(experimento);
+  }
+
+  async fyndByAlunoId(id: string): Promise<Experimento[]> {
+    return this.experimentosRepository
+      .createQueryBuilder('experimento')
+      .leftJoinAndSelect('experimento.turma', 'turma')
+      .leftJoinAndSelect('turma.alunos', 'aluno')
+      .where('aluno.id = :id', { id: id })
+      .getMany();
   }
 }

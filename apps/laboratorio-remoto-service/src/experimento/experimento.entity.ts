@@ -35,7 +35,7 @@ export class Experimento {
   turma: Turma[];
 
   @Column('longblob')
-  image?: string;
+  imagem?: string;
 
   @OneToMany(() => Experimento, (experimento) => experimento.agendamento)
   agendamento: Turma;

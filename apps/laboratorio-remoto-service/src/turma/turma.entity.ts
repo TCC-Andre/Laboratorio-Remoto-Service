@@ -38,7 +38,7 @@ export class Turma {
   alunos: Aluno[];
 
   @ManyToMany(() => Experimento, (experimento) => experimento.turma, {
-    cascade: true,
+    onDelete: 'CASCADE',
     eager: true,
   })
   @JoinTable()

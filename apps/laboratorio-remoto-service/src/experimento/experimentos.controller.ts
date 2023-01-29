@@ -53,4 +53,9 @@ export class ExperimentosController {
   remove(@Param('id') id: string): Promise<void> {
     return this.experimentosService.remove(id);
   }
+
+  @Get('aluno/:id')
+  consultarPorAluno(@Param('id') id: string): Promise<Experimento[]> {
+    return this.experimentosService.fyndByAlunoId(id);
+  }
 }

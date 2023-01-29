@@ -5,6 +5,8 @@ import { CadastrarTurma } from './dto/cadastrar-turma.dto';
 import { Turma } from './turma.entity';
 import * as dayjs from 'dayjs';
 import { EditarTurma } from './dto/editar-turma.dto';
+import { Aluno } from '../alunos/aluno.entity';
+import { Experimento } from '../experimento/experimento.entity';
 
 @Injectable()
 export class TurmasService {
