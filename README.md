@@ -28,4 +28,8 @@ Depois de executar a amostra, você pode parar o contêiner do Docker com:
 
 Em seguida, execute o Nest normalmente:
 
-`npm run start`
+`npm run start` 
+
+ou
+
+`npm run start:debug`
