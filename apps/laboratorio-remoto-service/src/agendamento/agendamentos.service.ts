@@ -99,7 +99,7 @@ export class AgendamentosService {
       .getMany();
 
     const horariosOcupados = temp.map((item) => {
-      return dayjs(item.dataInicio).format();
+      return dayjs(item.dataInicio).format('HH:mm');
     });
 
     const intervalo = [];
@@ -115,6 +115,9 @@ export class AgendamentosService {
       intervalo.push(dayjs(dataAtual).format('HH:mm'));
       dataAtual = dayjs(dataAtual).add(30, 'minute').format();
     }
+
+    console.log(horariosOcupados);
+    console.log(intervalo);
 
     const horariosDisponiveis = intervalo.filter(
       (item) => !horariosOcupados.includes(item),
