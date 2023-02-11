@@ -6,12 +6,15 @@ import { Agendamento } from './agendamento.entity';
 import * as dayjs from 'dayjs';
 import { ListarHorariosDisponiveisAgendamento } from './dto/listar-horarios-disponiveis-agendamento.dto';
 import { arredondarIntervaloHora } from '../utils/utils';
-
+import { consultarExisteAgendamento } from './dto/existe-agendamento.dto';
+import { Experimento } from '../experimento/experimento.entity';
 @Injectable()
 export class AgendamentosService {
   constructor(
     @InjectRepository(Agendamento)
     private readonly agendamentosRepository: Repository<Agendamento>,
+    @InjectRepository(Experimento)
+    private readonly experimentoRepository: Repository<Experimento>, // private readonly experimentoRepository: ExperimentosService,
   ) {}
 
   async create(
@@ -26,7 +29,17 @@ export class AgendamentosService {
 
     agendamento.dataInicio = dayjs(dataAtual).format('YYYY-MM-DD HH:mm');
 
-    console.log(agendamento.dataInicio);
+    console.log(cadastrarAgendamentoDto.experimentoId);
+
+    const experimento = await this.experimentoRepository.findOneBy({
+      id: String(cadastrarAgendamentoDto.experimentoId),
+    });
+
+    agendamento.dataFim = dayjs(dataAtual)
+      .add(Number(experimento.duracao), 'minutes')
+      .format('YYYY-MM-DD HH:mm');
+
+    console.log(agendamento.dataFim);
     agendamento.dataCadastro = dayjs().format();
     agendamento.aluno = cadastrarAgendamentoDto.alunoId;
     agendamento.experimento = cadastrarAgendamentoDto.experimentoId;
@@ -124,5 +137,16 @@ export class AgendamentosService {
     );
 
     return horariosDisponiveis;
+  }
+
+  consultarExisteAgendamento(
+    existeAgendamento: consultarExisteAgendamento,
+  ): any {
+    return this.agendamentosRepository
+      .createQueryBuilder('agendamento')
+      .leftJoinAndSelect('agendamento.experimentoId', 'experimentoId')
+      .leftJoinAndSelect('agendamento.alunoId', 'alunoId')
+      .where('aluno.id = :id', { id: existeAgendamento.alunoId })
+      .getMany();
   }
 }

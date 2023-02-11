@@ -17,8 +17,8 @@ export class Agendamento {
   @Column({ unique: true, type: 'timestamp' })
   dataInicio: Date | string;
 
-  // @Column()
-  // dataFim: string;
+  @Column({ unique: true, type: 'timestamp' })
+  dataFim: Date | string;
 
   @Column({ type: 'timestamp' })
   dataCadastro: Date | string;

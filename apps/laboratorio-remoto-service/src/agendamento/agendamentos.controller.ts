@@ -13,6 +13,7 @@ import { Agendamento } from './agendamento.entity';
 import { AgendamentosService } from './agendamentos.service';
 import { ListarHorariosDisponiveisAgendamento } from './dto/listar-horarios-disponiveis-agendamento.dto';
 import dayjs from 'dayjs';
+import { consultarExisteAgendamento } from './dto/existe-agendamento.dto';
 
 @ApiTags('Agendamentos')
 @Controller('agendamentos')
@@ -47,6 +48,15 @@ export class AgendamentosController {
   ): Promise<dayjs.Dayjs[]> {
     return await this.agendamentosService.listarHorariosDisponiveis(
       horariosDisponiveis,
+    );
+  }
+
+  @Post('/existe-agendamento')
+  async consultarExisteAgendamento(
+    @Body() existeAgendamento: consultarExisteAgendamento,
+  ): Promise<Agendamento | string> {
+    return this.agendamentosService.consultarExisteAgendamento(
+      existeAgendamento,
     );
   }
 }
