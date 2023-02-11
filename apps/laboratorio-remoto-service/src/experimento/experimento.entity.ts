@@ -37,6 +37,9 @@ export class Experimento {
   @Column('longblob')
   imagem?: string;
 
+  @Column()
+  iframe?: string;
+
   @OneToMany(() => Experimento, (experimento) => experimento.agendamento)
   agendamento: Turma;
 }

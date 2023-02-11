@@ -5,7 +5,6 @@ import { CadastrarExperimento } from './dto/cadastrar-experimento.dto';
 import { Experimento } from './experimento.entity';
 import * as dayjs from 'dayjs';
 import { EditarExperimento } from './dto/editar-experimento.dto';
-import { Turma } from '../turma/turma.entity';
 
 @Injectable()
 export class ExperimentosService {
@@ -26,6 +25,7 @@ export class ExperimentosService {
     experimento.dataCadastro = dayjs().format();
     experimento.turma = JSON.parse(cadastrarExperimentoDto.turma);
     experimento.imagem = file.buffer;
+    experimento.iframe = cadastrarExperimentoDto.iframe;
 
     const usuarioExistente = await this.experimentosRepository.findOneBy({
       nome: experimento.nome,
@@ -66,6 +66,8 @@ export class ExperimentosService {
     experimento.descricao = editarExperimentoDto.descricao;
     experimento.duracao = editarExperimentoDto.duracao;
     experimento.status = editarExperimentoDto.status;
+    experimento.imagem = editarExperimentoDto.imagem;
+    experimento.iframe = editarExperimentoDto.iframe;
 
     return this.experimentosRepository.save(experimento);
   }

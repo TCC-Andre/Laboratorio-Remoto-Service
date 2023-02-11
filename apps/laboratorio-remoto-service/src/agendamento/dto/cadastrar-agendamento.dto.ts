@@ -7,7 +7,7 @@ export class CadastrarAgendamento {
   @ApiProperty()
   @IsNotEmpty()
   @IsDateString()
-  dataInicio: string;
+  dataInicio: Date;
 
   @ApiProperty()
   @IsNotEmpty()

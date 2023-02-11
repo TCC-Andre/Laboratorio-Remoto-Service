@@ -27,4 +27,8 @@ export class CadastrarExperimento {
   @ApiProperty()
   @IsOptional()
   imagem: string;
+
+  @ApiProperty()
+  @IsOptional()
+  iframe: string;
 }

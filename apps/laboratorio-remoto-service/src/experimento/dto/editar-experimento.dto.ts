@@ -17,4 +17,12 @@ export class EditarExperimento {
   @ApiProperty()
   @IsOptional()
   status: boolean;
+
+  @ApiProperty()
+  @IsOptional()
+  imagem: string;
+
+  @ApiProperty()
+  @IsOptional()
+  iframe: string;
 }

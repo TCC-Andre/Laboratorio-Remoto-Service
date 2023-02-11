@@ -5,6 +5,7 @@ import { CadastrarAgendamento } from './dto/cadastrar-agendamento.dto';
 import { Agendamento } from './agendamento.entity';
 import * as dayjs from 'dayjs';
 import { ListarHorariosDisponiveisAgendamento } from './dto/listar-horarios-disponiveis-agendamento.dto';
+import { arredondarIntervaloHora } from '../utils/utils';
 
 @Injectable()
 export class AgendamentosService {
@@ -17,7 +18,15 @@ export class AgendamentosService {
     cadastrarAgendamentoDto: CadastrarAgendamento,
   ): Promise<Agendamento> {
     const agendamento = new Agendamento();
-    agendamento.dataInicio = cadastrarAgendamentoDto.dataInicio;
+
+    // Arredondando para o próximo horário disponível
+    const dataAtual = arredondarIntervaloHora(
+      dayjs(cadastrarAgendamentoDto.dataInicio).add(-1, 'minute').toDate(),
+    );
+
+    agendamento.dataInicio = dayjs(dataAtual).format('YYYY-MM-DD HH:mm');
+
+    console.log(agendamento.dataInicio);
     agendamento.dataCadastro = dayjs().format();
     agendamento.aluno = cadastrarAgendamentoDto.alunoId;
     agendamento.experimento = cadastrarAgendamentoDto.experimentoId;
@@ -64,7 +73,11 @@ export class AgendamentosService {
   async listarHorariosDisponiveis(
     listarHorariosDisponiveis: ListarHorariosDisponiveisAgendamento,
   ): Promise<dayjs.Dayjs[]> {
-    if (dayjs().isAfter(dayjs(listarHorariosDisponiveis.data, 'day'))) {
+    if (
+      dayjs()
+        .add(-2, 'minute')
+        .isAfter(dayjs(listarHorariosDisponiveis.data, 'day'))
+    ) {
       throw new HttpException(
         {
           statusCode: HttpStatus.BAD_REQUEST,
@@ -78,7 +91,7 @@ export class AgendamentosService {
     const temp = await this.agendamentosRepository
       .createQueryBuilder('my_entity')
       .where('DATE(dataInicio) = DATE(:date)', {
-        date: listarHorariosDisponiveis.data,
+        date: dayjs(listarHorariosDisponiveis.data).format('YYYY-MM-DD HH:mm'),
       })
       .where('my_entity.experimentoId = :experimentoId', {
         experimentoId: listarHorariosDisponiveis.experimentoId,
@@ -86,14 +99,17 @@ export class AgendamentosService {
       .getMany();
 
     const horariosOcupados = temp.map((item) => {
-      return dayjs(item.dataInicio).format('HH:mm');
+      return dayjs(item.dataInicio).format();
     });
 
     const intervalo = [];
-    let dataAtual = dayjs(listarHorariosDisponiveis.data).format();
+
+    // Arredondando para o próximo horário disponível
+    let dataAtual = arredondarIntervaloHora(listarHorariosDisponiveis.data);
+
     const dataFinal = dayjs(listarHorariosDisponiveis.data)
       .endOf('day')
-      .format();
+      .format('YYYY-MM-DD HH:mm');
 
     while (dayjs(dataAtual).isBefore(dataFinal)) {
       intervalo.push(dayjs(dataAtual).format('HH:mm'));
