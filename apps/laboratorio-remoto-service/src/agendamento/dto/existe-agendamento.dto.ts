@@ -5,13 +5,9 @@ export class consultarExisteAgendamento {
   @ApiProperty()
   @IsNotEmpty()
   @IsDateString()
-  data: string;
+  data: Date;
 
   @ApiProperty()
   @IsNotEmpty()
   experimentoId: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  alunoId: string;
 }

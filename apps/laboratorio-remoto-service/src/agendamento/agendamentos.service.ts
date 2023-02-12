@@ -139,14 +139,32 @@ export class AgendamentosService {
     return horariosDisponiveis;
   }
 
-  consultarExisteAgendamento(
+  async consultarExisteAgendamento(
     existeAgendamento: consultarExisteAgendamento,
-  ): any {
-    return this.agendamentosRepository
+  ): Promise<any> {
+    const agendamento = await this.agendamentosRepository
       .createQueryBuilder('agendamento')
-      .leftJoinAndSelect('agendamento.experimentoId', 'experimentoId')
-      .leftJoinAndSelect('agendamento.alunoId', 'alunoId')
-      .where('aluno.id = :id', { id: existeAgendamento.alunoId })
+      .leftJoinAndSelect('agendamento.experimento', 'experimento')
+      .where('experimento.id = :id', { id: existeAgendamento.experimentoId })
+      .andWhere(
+        'agendamento.dataInicio <= :dataFornecida AND agendamento.dataFim >= :dataFornecida',
+        { dataFornecida: existeAgendamento.data },
+      )
       .getMany();
+
+    if (agendamento.length > 0) {
+      return agendamento;
+    } else {
+      const hora = arredondarIntervaloHora(existeAgendamento.data);
+
+      throw new HttpException(
+        {
+          statusCode: HttpStatus.OK,
+          horarioFinal: dayjs(hora).format(),
+          message: 'Não existe agendamento neste horário.',
+        },
+        HttpStatus.OK,
+      );
+    }
   }
 }
