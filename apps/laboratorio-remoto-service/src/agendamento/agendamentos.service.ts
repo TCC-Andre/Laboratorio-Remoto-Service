@@ -145,6 +145,7 @@ export class AgendamentosService {
     const agendamento = await this.agendamentosRepository
       .createQueryBuilder('agendamento')
       .leftJoinAndSelect('agendamento.experimento', 'experimento')
+      .leftJoinAndSelect('agendamento.aluno', 'aluno')
       .where('experimento.id = :id', { id: existeAgendamento.experimentoId })
       .andWhere(
         'agendamento.dataInicio <= :dataFornecida AND agendamento.dataFim >= :dataFornecida',
@@ -153,7 +154,7 @@ export class AgendamentosService {
       .getMany();
 
     if (agendamento.length > 0) {
-      return agendamento;
+      return agendamento[0];
     } else {
       const hora = arredondarIntervaloHora(existeAgendamento.data);
 
